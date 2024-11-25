@@ -7,8 +7,6 @@ public class Item {
 
     private long quantity;
 
-    private boolean deleted = false; // to mark to delete
-
     public Item(String id, String name, String category, long quantity) {
         this.id = id;
         this.name = name;
@@ -16,12 +14,6 @@ public class Item {
         this.quantity = quantity;
     }
 
-    public void delete(){
-        deleted = true;
-    }
-    public boolean isDeleted(){
-        return deleted;
-    }
     public String getName() {
         return name;
     }
@@ -44,7 +36,7 @@ public class Item {
 
     @Override
     public String toString() { // to easily print to console
-        return id + "-" + name + " " + quantity + "nos";
+        return id + " | " + name + " | " + category + " | " + quantity + " nos";
     }
 
 }
