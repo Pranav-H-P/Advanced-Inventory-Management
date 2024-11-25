@@ -88,7 +88,7 @@ public class InventorySystem {
         }
         quantityCheck(id);
     }
-
+    // best case is O (log n)
     public void deleteItem(String id){ // O(n)
 
         if (itemMap.containsKey(id)){
@@ -97,31 +97,13 @@ public class InventorySystem {
             Item i = itemMap.get(id);
             itemMap.remove(id);
 
-
             // remove from category Order
-            SortedSet<Item> catOrder = categoryList.get(i.getCategory());
-
-            Iterator<Item> it = catOrder.iterator();
-
-            while (it.hasNext()) { // O(n)
-                Item elem = it.next();
-                if (elem.getId().equals(i.getId())) {
-                    it.remove(); // O(n) for the removal worst case (items are not sorted by id so binary search won't work) (only happens once)
-                    break;
-                }
-            }
-
+            // best case is O (log n)
+            categoryList.get(i.getCategory()).remove(i); // O(n) for the removal worst case (items are not sorted by id so binary search won't work)
 
             // remove from topKList
-            it = topKList.iterator();
-
-            while (it.hasNext()) { // O(n)
-                Item elem = it.next();
-                if (elem.getId().equals(i.getId())) {
-                    it.remove(); // O(n) for the removal worst case (items are not sorted by id so binary search won't work) (only happens once)
-                    break;
-                }
-            }
+            // best case is O (log n)
+            topKList.remove(i); // O(n) for the removal worst case (items are not sorted by id so binary search won't work)
 
         }else{
             System.out.println("Item does not exist!!");
@@ -158,7 +140,7 @@ public class InventorySystem {
         for (Item i: topKList){
             ++c;
             System.out.println(i);
-            if (c == k){
+            if (c == k || c >= topKList.size()){
                 break;
             }
         }
@@ -174,6 +156,13 @@ public class InventorySystem {
         }else{
             System.out.println("Category does not exist!!");
         }
+    }
+
+    public void clearInventory(){ // for testing purposes
+        itemMap = new HashMap<>();
+        topKList = new TreeSet<>(new ItemComparator());
+        categoryList = new HashMap<>();
+
     }
 
 

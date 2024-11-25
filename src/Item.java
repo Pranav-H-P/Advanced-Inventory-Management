@@ -38,5 +38,4 @@ public class Item {
     public String toString() { // to easily print to console
         return id + " | " + name + " | " + category + " | " + quantity + " nos";
     }
-
 }
